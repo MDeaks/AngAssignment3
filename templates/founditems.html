@@ -1,0 +1,18 @@
+<div class="container">  
+    <br> 
+    <br>    
+    <div ng-if="foundItems" class="row">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="item in foundItems">
+            {{ item.short_name }} : {{ item.name}} : {{ item.description}} 
+            <button  class="btn btn-danger" ng-click="onRemove({index: $index})">Don't want this one!</button>
+        </li>
+    </ul>
+    </div>     
+
+  <div class= "row" ng-if="!isValid">
+    <ul class="list-group">
+      <li class="list-group-item">Nothing found!</li>
+    </ul>
+    </div>
+</div>
