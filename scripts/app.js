@@ -9,11 +9,12 @@ angular.module('NarrowItDownApp', [])
 
 function FoundItemsDirective() {
   var ddo = {
-    templateUrl: 'templates/found-items.html',
+    templateUrl: 'templates/founditems.html',
     restrict: "E",
     scope: {
       foundItems: '<',
-      onRemove: '&'
+      onRemove: '&',
+      isValid: '<'
     }
   };
   return ddo;
@@ -23,18 +24,24 @@ NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
   var menu = this;
 
+  menu.valid=true;
   menu.found = [];
   menu.searchTerm = '';
 
   menu.getItems = function() {
     if (!(menu.searchTerm)) {
-      menu.found = null;
+      menu.found = [];
+      menu.valid=false;
       return;
     }
     menu.found = [];
+    
     var promise = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
     promise.then(function (response) {
       menu.found = response;
+      menu.valid =(response.length>0);
+      console.log(menu.valid)
+      console.log(response)
     })
     .catch(function (error) {
       console.log("Something went wrong.");
